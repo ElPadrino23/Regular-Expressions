@@ -85,4 +85,7 @@ My first approach to the **solution** was to use an automaton in prolog which is
 ## References
 
 Quenya. Omniglot.com. Recuperado el 18 de marzo de 2026, de https://www.omniglot.com/conscripts/tengwar.htm
+
 Fandom.com. Recuperado el 18 de marzo de 2026, de https://lotr.fandom.com/wiki/Quenya
+
+NFA vs  DFA  desentranar las diferencias en los modelos de automata finitos - FasterCapital. (s. f.). FasterCapital. https://fastercapital.com/es/contenido/NFA-vs--DFA--desentranar-las-diferencias-en-los-modelos-de-automata-finitos.html#Comprender-los-modelos-de-aut-mata-finitos

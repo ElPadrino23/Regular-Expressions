@@ -1,91 +1,123 @@
-# Evidencia 1: IImplementacion del Analisis Lexico
-Luis Fernando Martinez Barragan - A01613426
+# Evidencia 1: Implementación de Analisis Lexico
+### Nombre: Luis Fernando Martinez Barragan | Matrícula: A01613426
 
-## Descripcion
-El lenguaje que escogi es conocido como Quenya, este fue inventado por J.R.R y utilizado en sus libros como "El Hobbit" y "El señor de los anillos". Ademas de esto, es un lenguaje elfico, Tolkien se baso en el ingles antiguo, el Finlandes y el latin. 
+## Descripción
 
-Las palabras que escogi para modelar, fueron las siguientes: 
+El lenguaje que elegí es el lenguaje "Elfico", también conocido como Quenya, que Omniglot.com es una lengua construida creada por J. R. R. Derivada del ingles antiguo, el Finlandes y el latin. Talkien lo creo para los Elfos en su ficción de la Tierra Media. 
 
-1. Amil - word for 'Mother'
-2. An - 'long'.
-3. Anarya - Quenya meaning 'Sun's-day', the second day of the Elvish week.
-4. Anca - Quenya word for 'Jaws'.
-5. And - 'long'.
+Las palabras a modelar son las siguientes: 
 
+- Amil - palabra Quenya para 'Madre'
+- An - 'Largo'
+- Anarya - palabra para 'Dia del Sol', este hace referencia al segundo dia elfico.
+- Anca - palabra que significa 'Mandibulas'
+- And - 'Largo'
 
-## Model of the Solution
+Segun FasterCapital (2025), El uso de un Automata Finito es la manera mas sencilla de reconocer patrones, y existen dos tipos: DFA y NFA. Un DFA (Automata Finito Determinista) solo puede ir a un estado y el NFA puede ir a varios estados con la misma entrada.
 
-These are the three  automata I generated for this language:
+Para este proyecto decidi utilizar un DFA, ya que el objetivo es aceptar solo estas cinco palabras por lo que se puede seguir un solo camino para cada palabra y no se necesita un NFA. Ademas la ambiguedad de un NFA lo haria algo complicado de implementar. 
 
-The first automaton  is used to represent all the numbers that start from 1
+## Modelos
 
+Solo genere un automata para este lenguaje, ya que este representa las cinco palabras. El automata solo es válido para el siguiente alfabeto:
 
-![NFA1](automata.png)
- 
-The second automaton is used to represent all the numbers that start from 2 and 3 
+**Σ = {A, m, i, l, n, a, r, y, c, d}**
 
-![NFA2](automata.png)
+Cualquier carácter que no esté en el alfabeto y que no aparezca explícitamente en el autómata no es aceptado.
 
-The third automaton is used when …. Etc… 
+[Diagrama del autómata aquí]
 
-I decided to use three different automata because it is easier to do this way, however using NFA I have to transform them to DFA to be able to program the latter or to migrate them to a RE more easily rather than try to guess them. To do that, I followed the method proposed by (Sun et al 2054).  
+Otra forma de representar el automata es mediante una expresión regular. MongoDB (2025) menciona que ls expresiones regulares son patrones que se utilizan para hacer coincidir combinaciones de caracteres en cadenas. Entonces teniendolo en cuenta, el automata que diseñe se puede expresar de esta manera:
 
-The resulting automaton was:
-
-![NFA3](automata.png)
-
-The presented automata are equivalent to the following regular expressions:
-
-NDA 1 -> RE 1:
-{[1,2,3]*}
-
-NDA 2 -> RE 2:
-{[2,3]*}
-
-NDA 1 -> RE 1:
-{[132cc3,3]+-}
-
-## Implementation
-
-For my implementation of a lexical analysis, I followed the regular expressions as can be seen in the regex.py file.
-To use the file you need to put the input in the format of a string “1222344”  and the program should return yes if the string is accepted or no if the string is not part of the language.
-
-some examples of inputs and outputs are: 
- 
-  1123125  -> no
-
-  112312  -> yes
-
-  11  -> yes
-
-  1222123125  -> no
-
-## Tests
-
-The file tests.py contains all the cases tested for regular expressions. 
-
-## Analysis
-
-The **complexity** of my model is in general n, where n  is the length of the string to be processed. Here is my proof by induction or hand analysis time complexity:
+(^A)((mil)|(n(ε|arya|ca|d)))
 
 
-     for i < n
-       if i in n
-        i ++
-       end
-….  
+## Implementacion
 
+Utilice el automata para crear una base de conocimiento en Prolog. La base de conocimiento tiene el estado inicial, el siguiente estado y el símbolo que mueve de un estado a otro, modelado de la siguiente manera:
 
-I used the regex library from Python which internally according to the API documentation uses the algorithms from Unix to better parse... etc ... this means that my time complexity in general remains as O(n) 
+```prolog
+move(estado_actual, estado_siguiente, simbolo).
+```
 
-My first approach to the **solution** was to use an automaton in prolog which is also a natural solution however following the recommendations I found in  (sun et al, 2054)  I preferred the Regular Expression because it is faster in the context of ... etc ... havinf an overall time of  O(log n)
+También hay una regla adicional que es el estado de aceptación. Mi autómata tiene cinco estados de aceptación:
 
+```prolog
+accepting_state(c).
+```
 
+El resto del código tiene una regla auxiliar que llama a la regla recursiva:
 
-## References
+```prolog
+go_over_automaton(ListtoCheck) :-
+```
+
+El caso base:
+
+```prolog
+automatonCheck([], InitialState) :-
+```
+
+Y la regla recursiva:
+
+```prolog
+automatonCheck([Symbol | RestofList], InitialState) :-
+```
+
+Todo esto se encuentra en el archivo `elven.pl`. Si la palabra está en el lenguaje retorna `true`, si no retorna `false`.
+
+## Pruebas
+
+Para correr el programa, primero abrir `elven.pl` en Prolog. Para abrir el archivo ejecutar `["ruta/elven.pl"].`
+
+**Pruebas exitosas** — deben retornar `true`:
+
+```
+amil.
+an.
+anarya.
+anca.
+and_word.
+```
+
+**Pruebas fallidas** — deben retornar `false`:
+
+```
+amil_false.
+hello.
+anary.
+ami.
+anc.
+```
+
+Para probar una palabra diferente, ejecutar `go_over_automaton([lista-de-letras]).` donde cada letra va separada por coma.
+
+Ejemplo: para probar la palabra `hello` ejecutar: `go_over_automaton([h, e, l, l, o]).`
+
+## Análisis
+
+**Complejidad temporal**
+
+El programa usa recursión e itera sobre la base de conocimiento verificando cada hecho una vez, similar a un ciclo for. El caso base se alcanza cuando la lista está vacía, por lo que la complejidad asintótica es **O(n)**. No hay ningún ciclo anidado, por lo que la solución es eficiente.
+
+**DFA vs NFA**
+
+Ya expliqué por qué elegí el DFA: simplicidad. Aunque el NFA podría ser más fácil al diseñar el autómata, tendría que traducirse a DFA para programarlo. Como el lenguaje de cinco palabras es sencillo, usar DFA desde el inicio es lo más inteligente.
+
+**Otros lenguajes de programación**
+
+En Python, JavaScript o C++ se usaría un diccionario/arreglo con un ciclo for en lugar de recursión, pero todos tendrían la misma complejidad O(n). La diferencia principal es que en esos lenguajes se necesita crear una clase e instanciarla. Prolog es más limpio y elegante para este tipo de problema porque al ser un lenguaje lógico, la base de conocimiento representa el autómata de forma directa sin tanto código adicional.
+
+## Referencias
+
+Expresiones regulares - JavaScript | MDN. (2024). https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_expressions
 
 Quenya. Omniglot.com. Recuperado el 18 de marzo de 2026, de https://www.omniglot.com/conscripts/tengwar.htm
 
 Fandom.com. Recuperado el 18 de marzo de 2026, de https://lotr.fandom.com/wiki/Quenya
 
-NFA vs  DFA  desentranar las diferencias en los modelos de automata finitos - FasterCapital. (s. f.). FasterCapital. https://fastercapital.com/es/contenido/NFA-vs--DFA--desentranar-las-diferencias-en-los-modelos-de-automata-finitos.html#Comprender-los-modelos-de-aut-mata-finitos
+NFA vs  DFA  desentranar las diferencias en los modelos de automata finitos - FasterCapital. (2025) FasterCapital. https://fastercapital.com/es/contenido/NFA-vs--DFA--desentranar-las-diferencias-en-los-modelos-de-automata-finitos.html#Comprender-los-modelos-de-aut-mata-finitos
+
+Geeks for Geeks. (30 de noviembre, 2023). Regular Expression (RegEx) in Python with Examples. https://www.geeksforgeeks.org/regular-expression-python-examples/
+
+Wikipedia. (19 de enero, 2024). Quenya. https://en.wikipedia.org/wiki/Quenya

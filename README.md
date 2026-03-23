@@ -64,11 +64,11 @@ Y la regla recursiva:
 automatonCheck([Symbol | RestofList], InitialState) :-
 ```
 
-Todo esto se encuentra en el archivo `elven.pl`. Si la palabra está en el lenguaje retorna `true`, si no retorna `false`.
+Todo esto se encuentra en el archivo `Quenya.pl`. Si la palabra está en el lenguaje retorna `true`, si no retorna `false`.
 
 ## Pruebas
 
-Para correr el programa, primero abrir `elven.pl` en Prolog. Para abrir el archivo ejecutar `["ruta/elven.pl"].`
+Para correr el programa, primero abrir `Quenya.pl` en Prolog.
 
 **Pruebas exitosas** — deben retornar `true`:
 

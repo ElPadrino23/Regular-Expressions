@@ -44,6 +44,10 @@ En los estados de aceptación, el automata tiene cinco estados de aceptacion:
  
 ```prolog
 final(c).
+final(g).
+final(j).
+final(k).
+final(z).
 ```
  
 El resto del código tiene una regla auxiliar que llama a la regla recursiva: 

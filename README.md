@@ -98,17 +98,37 @@ anc.
 
 ## Análisis
 
+```markdown
+## Análisis
+
 **Complejidad temporal**
 
-El programa usa recursión e itera sobre la base de conocimiento verificando cada hecho una vez, similar a un ciclo for. El caso base se alcanza cuando la lista está vacía, por lo que la complejidad asintótica es **O(n)**. No hay ningún ciclo anidado, por lo que la solución es eficiente.
+El programa utiliza recursion e itera sobre la base de datos verificando cada hecho una vez, esto es muy similar a un ciclo for. El caso base se alcanza cuando la lista esta vacia y no se realiza ninguna operacion adicional, por lo que la complejidad es O(n), ademas no hay ningun ciclo anidado, por lo que sin importar cuántos hechos haya en la base de conocimiento, siempre se itera sobre cada uno una sola vez.
 
-**DFA vs NFA**
+Escogi este enfoque  porque en prolog es la forma natural de recorrer una lista, ademas hace el codigo mas legible que un ciclo imperativo. Cada llamada recursiva consume una letra y avanza un estado.
 
-Ya expliqué por qué elegí el DFA: simplicidad. Aunque el NFA podría ser más fácil al diseñar el autómata, tendría que traducirse a DFA para programarlo. Como el lenguaje de cinco palabras es sencillo, usar DFA desde el inicio es lo más inteligente.
+- **Mejor caso O(1):** La palabra empieza con un carácter que no está en el alfabeto, por ejemplo `verificar([h, e, l, l, o])`. El programa intenta hacer `grafo(a, _, h)`, no encuentra ninguna transición y falla de inmediato sin recorrer el resto de la lista.
+- **Caso promedio O(n):** Una palabra que comparte prefijo con las palabras del lenguaje pero no termina siendo válida, por ejemplo `verificar(['A', n, a, r, y])`. El programa recorre 5 letras antes de llegar a un estado que no es de aceptación.
+- **Peor caso O(n):** Una palabra válida como `verificar(['A', n, a, r, y, a])`. El programa recorre todas las letras una por una hasta llegar al estado final de aceptación, siendo n=6 en este caso.
 
-**Otros lenguajes de programación**
+## DFA vs NFA
 
-En Python, JavaScript o C++ se usaría un diccionario/arreglo con un ciclo for en lugar de recursión, pero todos tendrían la misma complejidad O(n). La diferencia principal es que en esos lenguajes se necesita crear una clase e instanciarla. Prolog es más limpio y elegante para este tipo de problema porque al ser un lenguaje lógico, la base de conocimiento representa el autómata de forma directa sin tanto código adicional.
+Se eligió el DFA porque garantiza que para cada estado y cada símbolo de entrada existe exactamente una transición posible. Esto lo hace predecible y directo de implementar: en ningún momento el programa tiene que explorar varios caminos al mismo tiempo. Un NFA en cambio permite que desde un mismo estado y con el mismo símbolo se pueda ir a varios estados distintos, lo que genera ambigüedad y obliga a explorar múltiples caminos en paralelo o convertirlo a DFA antes de programarlo. Como el lenguaje élfico solo tiene cinco palabras y todas comparten el mismo prefijo `A`, el DFA es suficiente y más sencillo.
+
+- **Mejor caso DFA:** La palabra `An` se verifica en 2 pasos siguiendo el camino `a → b → c`, sin ninguna bifurcación posible.
+- **Caso promedio DFA:** La palabra `Anca` recorre 4 estados. En ningún momento hay duda de a qué estado ir.
+- **Peor caso DFA:** La palabra `Anarya` recorre 6 estados. Aun así el programa sigue un único camino lineal sin explorar alternativas.
+
+Con un NFA, el peor caso sería exponencial O(2^n) porque habría que rastrear simultáneamente todos los posibles estados activos en cada paso.
+
+## Otros lenguajes de programación
+
+Aunque Python, JavaScript o C++ podrían resolver el mismo problema con un diccionario y un ciclo for, todos tienen la misma complejidad O(n). La razón por la que se eligió Prolog es que al ser un lenguaje lógico y declarativo, la base de conocimiento representa el autómata de forma directa: cada hecho `grafo/3` es literalmente una transición del diagrama. En los otros lenguajes habría que crear una clase, instanciarla y escribir lógica adicional para manejar los estados, lo que añade código que no aporta nada al problema en sí.
+
+- **Mejor caso en cualquier lenguaje O(1):** La primera letra no tiene transición definida y el programa rechaza inmediatamente, como con `hello`.
+- **Caso promedio O(n):** Una palabra inválida que comparte varios caracteres con las palabras del lenguaje, como `Anary`, obliga a recorrer n-1 letras antes de fallar.
+- **Peor caso O(n):** Una palabra válida como `Anarya` donde se recorren todas las letras hasta confirmar la aceptación. En Prolog esto es una cadena de llamadas recursivas; en Python sería un ciclo for de 6 iteraciones. El resultado es el mismo, pero el código Prolog es considerablemente más corto y claro.
+```
 
 ## Referencias
 

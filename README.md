@@ -34,19 +34,19 @@ Otra forma de representar el automata es mediante una expresión regular. MongoD
 
 ## Implementación
  
-Usé el autómata para crear una base de conocimiento en Prolog. La base de conocimiento tiene el estado actual, el siguiente estado y el símbolo que provoca la transición, modelado de la siguiente manera:
+Utilice el autómata para crear una base de datos en prolog, esta tiene el estado actual, el siguiente estado y la letra como derivado de la transicion, modelado de la siguiente forma:
  
 ```prolog
 grafo(estado_actual, estado_siguiente, simbolo).
 ```
  
-También hay una regla adicional que define los estados de aceptación. Mi autómata tiene cinco estados de aceptación:
+En los estados de aceptación, el automata tiene cinco estados de aceptacion:
  
 ```prolog
 final(c).
 ```
  
-El resto del código tiene una regla auxiliar que llama a la regla recursiva:
+El resto del código tiene una regla auxiliar que llama a la regla recursiva: 
  
 ```prolog
 verificar(Palabra) :-
@@ -64,35 +64,33 @@ Y la regla recursiva:
 validar([Letra | Resto], Estado) :-
 ```
  
-Todo esto se encuentra en el archivo `elven.pl`. Si la palabra está en el lenguaje retorna `true`, si no retorna `false`.
+Todo esto se encuentra en el archivo `quenya.pl`, si la palabra se encuentra dentro de la base de datos, retornara True, en caso contrario retornara False
  
 ## Pruebas
  
-Para correr el programa, primero abrir `elven.pl` en Prolog. Para abrir el archivo ejecutar `["ruta/elven.pl"].`
+
  
-**Pruebas exitosas** — deben retornar `true`:
+**Pruebas exitosas**  Retornan True:
  
 ```
 amil.
 an.
 anarya.
 anca.
-and_word.
+and.
 ```
  
-**Pruebas fallidas** — deben retornar `false`:
+**Pruebas fallidas** Retornar False:
+Realmente cualquier palabra que no este dentro de la lista retornara 'False', algunos ejemplos que utilice  para la prueba fueron: 
  
 ```
-amil_false.
-hello.
+amill.
+hola.
 anary.
-ami.
+ann.
 anc.
 ```
- 
-Para probar una palabra diferente, ejecutar `verificar([lista-de-letras]).` donde cada letra va separada por coma.
- 
-Ejemplo: para probar la palabra `hello` ejecutar: `verificar([h, e, l, l, o]).`
+
 
 ## Análisis
 

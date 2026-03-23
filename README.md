@@ -25,7 +25,7 @@ Solo genere un automata para este lenguaje, ya que este representa las cinco pal
 
 Cualquier carácter que no esté en el alfabeto y que no aparezca explícitamente en el autómata no es aceptado.
 
-![Automata Quenya](https://github.com/ElPadrino23/Regular-Expression//main/Regular-Expressions%Quenya.png)
+![Automata Quenya](Quenya.png)
 
 Otra forma de representar el automata es mediante una expresión regular. MongoDB (2025) menciona que ls expresiones regulares son patrones que se utilizan para hacer coincidir combinaciones de caracteres en cadenas. Entonces teniendolo en cuenta, el automata que diseñe se puede expresar de esta manera:
 

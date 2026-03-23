@@ -98,7 +98,7 @@ anc.
 
 ## Análisis
 
-```markdown
+
 ## Análisis
 
 **Complejidad temporal**
@@ -128,7 +128,6 @@ Aunque Python, JavaScript o C++ podrían resolver el mismo problema con un dicci
 - **Mejor caso en cualquier lenguaje O(1):** La primera letra no tiene transición definida y el programa rechaza inmediatamente, como con `hello`.
 - **Caso promedio O(n):** Una palabra inválida que comparte varios caracteres con las palabras del lenguaje, como `Anary`, obliga a recorrer n-1 letras antes de fallar.
 - **Peor caso O(n):** Una palabra válida como `Anarya` donde se recorren todas las letras hasta confirmar la aceptación. En Prolog esto es una cadena de llamadas recursivas; en Python sería un ciclo for de 6 iteraciones. El resultado es el mismo, pero el código Prolog es considerablemente más corto y claro.
-```
 
 ## Referencias
 

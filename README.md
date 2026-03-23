@@ -32,46 +32,46 @@ Otra forma de representar el automata es mediante una expresión regular. MongoD
 (^A)((mil)|(n(ε|arya|ca|d)))
 
 
-## Implementacion
-
-Utilice el automata para crear una base de conocimiento en Prolog. La base de conocimiento tiene el estado inicial, el siguiente estado y el símbolo que mueve de un estado a otro, modelado de la siguiente manera:
-
+## Implementación
+ 
+Usé el autómata para crear una base de conocimiento en Prolog. La base de conocimiento tiene el estado actual, el siguiente estado y el símbolo que provoca la transición, modelado de la siguiente manera:
+ 
 ```prolog
-move(estado_actual, estado_siguiente, simbolo).
+grafo(estado_actual, estado_siguiente, simbolo).
 ```
-
-También hay una regla adicional que es el estado de aceptación. Mi autómata tiene cinco estados de aceptación:
-
+ 
+También hay una regla adicional que define los estados de aceptación. Mi autómata tiene cinco estados de aceptación:
+ 
 ```prolog
-accepting_state(c).
+final(c).
 ```
-
+ 
 El resto del código tiene una regla auxiliar que llama a la regla recursiva:
-
+ 
 ```prolog
-go_over_automaton(ListtoCheck) :-
+verificar(Palabra) :-
 ```
-
+ 
 El caso base:
-
+ 
 ```prolog
-automatonCheck([], InitialState) :-
+validar([], Estado) :-
 ```
-
+ 
 Y la regla recursiva:
-
+ 
 ```prolog
-automatonCheck([Symbol | RestofList], InitialState) :-
+validar([Letra | Resto], Estado) :-
 ```
-
-Todo esto se encuentra en el archivo `Quenya.pl`. Si la palabra está en el lenguaje retorna `true`, si no retorna `false`.
-
+ 
+Todo esto se encuentra en el archivo `elven.pl`. Si la palabra está en el lenguaje retorna `true`, si no retorna `false`.
+ 
 ## Pruebas
-
-Para correr el programa, primero abrir `Quenya.pl` en Prolog.
-
+ 
+Para correr el programa, primero abrir `elven.pl` en Prolog. Para abrir el archivo ejecutar `["ruta/elven.pl"].`
+ 
 **Pruebas exitosas** — deben retornar `true`:
-
+ 
 ```
 amil.
 an.
@@ -79,9 +79,9 @@ anarya.
 anca.
 and_word.
 ```
-
+ 
 **Pruebas fallidas** — deben retornar `false`:
-
+ 
 ```
 amil_false.
 hello.
@@ -89,10 +89,10 @@ anary.
 ami.
 anc.
 ```
-
-Para probar una palabra diferente, ejecutar `go_over_automaton([lista-de-letras]).` donde cada letra va separada por coma.
-
-Ejemplo: para probar la palabra `hello` ejecutar: `go_over_automaton([h, e, l, l, o]).`
+ 
+Para probar una palabra diferente, ejecutar `verificar([lista-de-letras]).` donde cada letra va separada por coma.
+ 
+Ejemplo: para probar la palabra `hello` ejecutar: `verificar([h, e, l, l, o]).`
 
 ## Análisis
 

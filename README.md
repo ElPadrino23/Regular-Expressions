@@ -121,3 +121,4 @@ NFA vs  DFA  desentranar las diferencias en los modelos de automata finitos - Fa
 Geeks for Geeks. (30 de noviembre, 2023). Regular Expression (RegEx) in Python with Examples. https://www.geeksforgeeks.org/regular-expression-python-examples/
 
 Wikipedia. (19 de enero, 2024). Quenya. https://en.wikipedia.org/wiki/Quenya
+

@@ -3,7 +3,7 @@
 
 ## Descripción
 
-El lenguaje que elegí es el lenguaje "Elfico", también conocido como Quenya, que Omniglot.com es una lengua construida creada por J. R. R. Derivada del ingles antiguo, el Finlandes y el latin. Talkien lo creo para los Elfos en su ficción de la Tierra Media. 
+El lenguaje que elegí es el lenguaje "Elfico", también conocido como Quenya, que segun (Omniglot, 2025) es una lengua construida creada por J. R. R. Derivada del ingles antiguo, el Finlandes y el latin. Talkien lo creo para los Elfos en su ficción de la Tierra Media. 
 
 Las palabras a modelar son las siguientes: 
 

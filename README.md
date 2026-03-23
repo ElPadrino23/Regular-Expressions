@@ -103,32 +103,47 @@ anc.
 
 **Complejidad temporal**
 
-El programa utiliza recursion e itera sobre la base de datos verificando cada hecho una vez, esto es muy similar a un ciclo for. El caso base se alcanza cuando la lista esta vacia y no se realiza ninguna operacion adicional, por lo que la complejidad es O(n), ademas no hay ningun ciclo anidado, por lo que sin importar cuántos hechos haya en la base de conocimiento, siempre se itera sobre cada uno una sola vez.
+El programa utiliza recursion e itera sobre la base de datos verificando cada hecho una vez, esto es muy similar a un ciclo for. Ademas no hay ningun ciclo anidado, por lo que no importa cuantos datos haya en la base de datos, siempre se iterara una unica vez.
 
-Escogi este enfoque  porque en prolog es la forma natural de recorrer una lista, ademas hace el codigo mas legible que un ciclo imperativo. Cada llamada recursiva consume una letra y avanza un estado.
 
-- **Mejor caso O(1):** La palabra empieza con un carácter que no está en el alfabeto, por ejemplo `verificar([h, e, l, l, o])`. El programa intenta hacer `grafo(a, _, h)`, no encuentra ninguna transición y falla de inmediato sin recorrer el resto de la lista.
-- **Caso promedio O(n):** Una palabra que comparte prefijo con las palabras del lenguaje pero no termina siendo válida, por ejemplo `verificar(['A', n, a, r, y])`. El programa recorre 5 letras antes de llegar a un estado que no es de aceptación.
-- **Peor caso O(n):** Una palabra válida como `verificar(['A', n, a, r, y, a])`. El programa recorre todas las letras una por una hasta llegar al estado final de aceptación, siendo n=6 en este caso.
+### verificar(Palabra)
 
+Esta funcion llama a 'validar' y que este coincida por el grafo inicial, en este caso el grafo 'a'
+
+- Mejor caso O(1): si la palabra es una lista vacía, esta llama a la funcion y de inmediato verifica si `a` es estado final, si no lo es, falla luego luego
+- Caso promedio O(n): Por ejemplo, si la palabra es `[a, n, c, a]` (Anca). Delegara a la funcion validar y esta recorrera 4 letras antes de llegar a un estado de aceptacion
+- Peor caso O(n): Por ejemplo si la palabra es `[a, n, a, r, y, a]` (Anarya). Delega a la funcion y esta recorre las 6 letras completas.la funcion solo inicializa el proceso pero su peor caso total depende de lo que haga la misma funcion
+
+### validar([], Estado)
+
+Como no se deben de procesar palabras, solo el estado de aceptacion 
+- Mejor caso O(1): Si el estado final es 'c' llegara ahi después de leer 'a' y 'n' y el estado actual es `c`, que si es final, dandonos true de inmediato
+- Caso promedio O(1):Mismo caso 
+- Peor caso O(1): Mismo caso
+
+### validar([Letra | Resto], Estado)
+
+En este caso, se llama a la funcion,  la palabra se coloca entre corchetes y se coloca el estado inicial
+
+- Mejor caso O(1): Si la primera letra no tiene ninguna transicion desde el estado actual, la funcion busca no encuentra y va a falla de inmediato, sin necesidad de entrar a la recursividad
+- Caso promedio O(n): Si la palabra es invalida,  Se ejecutara el numero de la cantidad de lentras en la palabra, avanzara por los estados donde llegara al final y fallara.
+- Peor caso O(n): Mismo caso que el caso promedio. 
 ## DFA vs NFA
 
-Se eligió el DFA porque garantiza que para cada estado y cada símbolo de entrada existe exactamente una transición posible. Esto lo hace predecible y directo de implementar: en ningún momento el programa tiene que explorar varios caminos al mismo tiempo. Un NFA en cambio permite que desde un mismo estado y con el mismo símbolo se pueda ir a varios estados distintos, lo que genera ambigüedad y obliga a explorar múltiples caminos en paralelo o convertirlo a DFA antes de programarlo. Como el lenguaje élfico solo tiene cinco palabras y todas comparten el mismo prefijo `A`, el DFA es suficiente y más sencillo.
+Escogi el automata  DFA porque este me garantiza que cada estado y cada simbolo existe, ya que este es predecible y el automata no tendra que ir por varios caminos al mismo tiempo. Y un NFA me permite que desde un mismo estado y con el mismo simbolo se pueda mover a varios estados distintos. Como el lenguaje Quenya solo tiene cinco palabras y todas comparten el mismo prefijo, el DFA fue el mas sencillo.
 
-- **Mejor caso DFA:** La palabra `An` se verifica en 2 pasos siguiendo el camino `a → b → c`, sin ninguna bifurcación posible.
-- **Caso promedio DFA:** La palabra `Anca` recorre 4 estados. En ningún momento hay duda de a qué estado ir.
-- **Peor caso DFA:** La palabra `Anarya` recorre 6 estados. Aun así el programa sigue un único camino lineal sin explorar alternativas.
-
-Con un NFA, el peor caso sería exponencial O(2^n) porque habría que rastrear simultáneamente todos los posibles estados activos en cada paso.
+Ademas que con un NFA, el peor caso seria  O(2^n) porque habraa que rastrear todos los posibles estados 
 
 ## Otros lenguajes de programación
 
-Aunque Python, JavaScript o C++ podrían resolver el mismo problema con un diccionario y un ciclo for, todos tienen la misma complejidad O(n). La razón por la que se eligió Prolog es que al ser un lenguaje lógico y declarativo, la base de conocimiento representa el autómata de forma directa: cada hecho `grafo/3` es literalmente una transición del diagrama. En los otros lenguajes habría que crear una clase, instanciarla y escribir lógica adicional para manejar los estados, lo que añade código que no aporta nada al problema en sí.
+Podrian resolver el mismo problema con Python, JavaScript o C++, utilizando un diccionario y un ciclo for, ademas que todos tienen la misma complejidad. Entonces escogi usar prolog, ya que como es un lenguaje logico.
 
-- **Mejor caso en cualquier lenguaje O(1):** La primera letra no tiene transición definida y el programa rechaza inmediatamente, como con `hello`.
-- **Caso promedio O(n):** Una palabra inválida que comparte varios caracteres con las palabras del lenguaje, como `Anary`, obliga a recorrer n-1 letras antes de fallar.
-- **Peor caso O(n):** Una palabra válida como `Anarya` donde se recorren todas las letras hasta confirmar la aceptación. En Prolog esto es una cadena de llamadas recursivas; en Python sería un ciclo for de 6 iteraciones. El resultado es el mismo, pero el código Prolog es considerablemente más corto y claro.
-
+- Mejor caso en cualquier lenguaje O(1): La primera letra no tiene transicion y el programa falla al momento.
+  
+- Caso promedio O(n): Una palabra que no sea valida y que comparte varias letras con las palabras del lenguaje, hara que recorrer n-1 letras antes de fallar.
+  
+- Peor caso O(n): Una palabra valida, en este caso anarya donde se recorren todas las letras hasta llegar a la aceptacion.
+- 
 ## Referencias
 
 Expresiones regulares - JavaScript | MDN. (2024). https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_expressions

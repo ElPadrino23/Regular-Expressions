@@ -1,5 +1,5 @@
-% Base de conocimiento con estados y caracteres
-grafo(a, b, 'A').
+% Movimiento (nodo actual, nodo destino, letra)
+grafo(a, b, a).
 grafo(b, c, n).
 grafo(b, d, m).
 grafo(c, e, a).
@@ -12,7 +12,7 @@ grafo(h, k, l).
 grafo(i, l, y).
 grafo(l, z, a).
  
-% Estados de aceptacion
+% Estados de aceptacion, nodo destino 
 final(c).
 final(g).
 final(j).
@@ -30,51 +30,26 @@ validar([Letra | Resto], Estado) :-
     validar(Resto, Siguiente).
  
 amil:-
-    write('Amil'), nl,
-    write('Resultado: true'), nl,
-    verificar(['A', m, i, l]).
- 
-an:-
-    write('An'), nl,
-    write('Resultado: true'), nl,
-    verificar(['A', n]).
- 
-anarya:-
-    write('Anarya'), nl,
-    write('Resultado: true'), nl,
-    verificar(['A', n, a, r, y, a]).
- 
-anca:-
-    write('Anca'), nl,
-    write('Resultado: true'), nl,
-    verificar(['A', n, c, a]).
- 
-and_word:-
-    write('And'), nl,
-    write('Resultado: true'), nl,
-    verificar(['A', n, d]).
- 
-amil_false:-
     write('amil'), nl,
-    write('Resultado: false'), nl,
+    write('Resultado: true'), nl,
     verificar([a, m, i, l]).
  
-hello:-
-    write('hello'), nl,
-    write('Resultado: false'), nl,
-    verificar([h, e, l, l, o]).
+an:-
+    write('an'), nl,
+    write('Resultado: true'), nl,
+    verificar([a, n]).
  
-anary:-
-    write('Anary'), nl,
-    write('Resultado: false'), nl,
-    verificar(['A', n, a, r, y]).
+anarya:-
+    write('anarya'), nl,
+    write('Resultado: true'), nl,
+    verificar([a, n, a, r, y, a]).
  
-ami:-
-    write('Ami'), nl,
-    write('Resultado: false'), nl,
-    verificar(['A', m, i]).
+anca:-
+    write('anca'), nl,
+    write('Resultado: true'), nl,
+    verificar([a, n, c, a]).
  
-anc:-
-    write('Anc'), nl,
-    write('Resultado: false'), nl,
-    verificar(['A', n, c]).
+and:-
+    write('and'), nl,
+    write('Resultado: true'), nl,
+    verificar([a, n, d]).
